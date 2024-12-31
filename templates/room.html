@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: beige;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .message-box {
+        border: 2px solid black;
+        border-radius: 10px;
+        width: 80%;
+        margin: auto;
+        padding: 10px;
+        background-color: white;
+        height: 50vh;
+        overflow-y: auto;
+    }
+
+    .inputs {
+        margin-top: 20px;
+    }
+
+    .inputs input {
+        padding: 10px;
+        width: 70%;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .inputs button {
+        padding: 10px 20px;
+        background-color: blue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .inputs button:hover {
+        background-color: darkblue;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<h2>Chat Room: {{ code }}</h2>
+<div class="message-box" id="messages">
+    <!-- Messages will appear here -->
+</div>
+
+<div class="inputs">
+    <input type="text" id="message" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    const socket = io();
+
+    socket.on("connect", () => {
+        console.log("Connected to the server");
+        const room = "{{ code }}";
+        socket.emit("join", { room: room });
+    });
+
+    socket.on("message", (data) => {
+        console.log("Received message:", data);
+        const messagesContainer = document.querySelector("#messages");
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = `${data.name}: ${data.message}`;
+        messagesContainer.appendChild(messageDiv);
+    });
+
+    const messageInput = document.querySelector("#message");
+    const sendButton = document.querySelector("button");
+
+    const sendMessage = () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            console.log("Sending message:", message);
+            socket.emit("message", { message });
+            messageInput.value = "";
+        }
+    };
+
+    sendButton.addEventListener("click", sendMessage);
+    messageInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+</script>
+
+{% endblock %}

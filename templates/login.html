@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-image: url("{{url_for('static', filename='cyberJester.webp')}}");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 150vh;
+    }
+
+    .form {
+        background: rgba(18, 18, 40, 0.9);
+        border: 2px solid #8c50ff;
+        border-radius: 15px;
+        padding: 30px;
+        width: 300px;
+        box-shadow: 0 0 20px #8c50ff, 0 0 30px #470bb8;
+        margin: 50px auto;
+    }
+
+    .form input, .form button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .form button {
+        background-color: blue;
+        color: white;
+        cursor: pointer;
+    }
+
+    .form button:hover {
+        background-color: darkblue;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<div class="form">
+    <h2>Login</h2>
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+{% endblock %}

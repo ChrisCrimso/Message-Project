@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body {
+        background-image: url("{{url_for('static', filename='cyberJester.webp')}}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 110vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+        width: 300px;
+        margin: 50px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-container input, .form-container button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    .form-container input {
+        background-color: #f0f0f0;
+        color: #333;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container input:focus {
+        outline: none;
+        background-color: #e0e0e0;
+    }
+
+    .form-container button {
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+
+    .room-code {
+        color: green;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Join or Create a Room</h2>
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+    {% if room_code %}
+    <div class="room-code">Room Code: {{ room_code }}</div>
+    {% endif %}
+    <form method="POST">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="text" name="code" placeholder="Enter room code">
+        <button type="submit" name="join" value="join">Join Room</button>
+        <button type="submit" name="create" value="create">Create Room</button>
+    </form>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-image: url("{{url_for('static', filename='cyberCity.jpg')}}");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 100vh;
+        font-family: 'Times New Roman', Times, serif;
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3em;
+        margin-top: 30px;
+        color: #72069c;
+        text-shadow: 
+            0 0 5px #00d4ff, 
+            0 0 10px #f3c705, 
+            0 0 15px #ff00ff;
+    }
+
+    .buttons {
+        margin-top: 50px;
+    }
+
+    .buttons a {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: blue;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .buttons a:hover {
+        background-color: darkblue;
+    }
+</style>
+
+<h1>Welcome to the Chat App</h1>
+<div class="buttons">
+    <a href="{{ url_for('signup') }}">Signup</a>
+    <a href="{{ url_for('login') }}">Login</a>
+</div>
+
+{% endblock %}
